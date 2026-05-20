@@ -83,6 +83,10 @@ function doneFetch() {
         rebuildURL();
     });
     homeWrap.append(homeTeamSelect);
+    const sortingHomeOptions = Array.from(homeTeamSelect.options);
+    sortingHomeOptions
+        .sort((a, b) => a.text.localeCompare(b.text))
+        .forEach(opt => homeTeamSelect.appendChild(opt));
 
     contentArea.append(homeWrap);
 
@@ -117,6 +121,10 @@ function doneFetch() {
         rebuildURL();
     });
     awayWrap.append(awayTeamSelect);
+    const sortingAwayOptions = Array.from(awayTeamSelect.options);
+    sortingAwayOptions
+        .sort((a, b) => a.text.localeCompare(b.text))
+        .forEach(opt => awayTeamSelect.appendChild(opt));
 
     contentArea.append(awayWrap);
 
@@ -135,6 +143,7 @@ function drawSummary() {
     let summaryHome = document.createElement("DIV");
     summaryHome.classList.add("col-5");
     let summaryHomeImg = document.createElement("IMG");
+    summaryHomeImg.classList.add("team-crest");
     summaryHomeImg.setAttribute("src",imgPrefix + teams[params.home].img);
     summaryHome.append(summaryHomeImg);
     let summaryHomeTeam = document.createElement("DIV");
@@ -150,6 +159,7 @@ function drawSummary() {
     let summaryAway = document.createElement("DIV");
     summaryAway.classList.add("col-5");
     let summaryAwayImg = document.createElement("IMG");
+    summaryAwayImg.classList.add("team-crest");
     summaryAwayImg.setAttribute("src",imgPrefix + teams[params.away].img);
     summaryAway.append(summaryAwayImg);
     let summaryAwayTeam = document.createElement("DIV");

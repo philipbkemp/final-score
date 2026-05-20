@@ -14,6 +14,11 @@
         "name": "UN Käerjéng 97",
         "img": "un-kaerjeng-97.png"
     },
+    "NULL": {
+        "key": "NULL",
+        "name": "- Unknown team -",
+        "img": "unknown.png"
+    },
     "UNTP": {
         "key": "UNTP",
         "name": "Union Titus Pétange",

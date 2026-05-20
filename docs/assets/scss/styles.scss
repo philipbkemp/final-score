@@ -33,10 +33,15 @@ input.form-control:read-only {
     pointer-events: none;
 }
 
+img.team-crest {
+    max-height: 70px;
+}
+
 .match-team {
     text-align: center;
     position: relative;
     img {
+        max-height: 70px;
         opacity: 0.25;
     }
     .match-score {

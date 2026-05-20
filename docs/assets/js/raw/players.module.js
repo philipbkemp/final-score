@@ -86,6 +86,7 @@ function doneFetch() {
     homeWrap.classList.add("text-center","mt-2");
 
     let homeImg = document.createElement("IMG");
+    homeImg.classList.add("team-crest");
     homeImg.setAttribute("src",imgPrefix + teams[params.home].img);
     homeWrap.append(homeImg);
     let homeTeam = document.createElement("DIV");
@@ -116,6 +117,7 @@ function doneFetch() {
     awayWrap.classList.add("text-center","mt-2","d-none");
 
     let awayImg = document.createElement("IMG");
+    awayImg.classList.add("team-crest");
     awayImg.setAttribute("src",imgPrefix + teams[params.away].img);
     awayWrap.append(awayImg);
     let awayTeam = document.createElement("DIV");

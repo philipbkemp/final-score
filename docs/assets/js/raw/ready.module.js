@@ -50,8 +50,9 @@ function doneFetch() {
     let rowHome = document.createElement("DIV");
     rowHome.classList.add("row","mt-5");
     let homeImgWrap = document.createElement("DIV");
-    homeImgWrap.classList.add("col-3");
+    homeImgWrap.classList.add("col-3","text-center");
     let homeImg = document.createElement("IMG");
+    homeImg.classList.add("team-crest");
     homeImg.setAttribute("src",imgPrefix + teams[params.home].img);
     homeImgWrap.append(homeImg);
     let homeTeamSheet = document.createElement("DIV");
@@ -65,8 +66,9 @@ function doneFetch() {
     let rowAway = document.createElement("DIV");
     rowAway.classList.add("row");
     let awayImgWrap = document.createElement("DIV");
-    awayImgWrap.classList.add("col-3");
+    awayImgWrap.classList.add("col-3","text-center");
     let awayImg = document.createElement("IMG");
+    awayImg.classList.add("team-crest");
     awayImg.setAttribute("src",imgPrefix + teams[params.away].img);
     awayImgWrap.append(awayImg);
     let awayTeamSheet = document.createElement("DIV");

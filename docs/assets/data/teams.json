@@ -1,18 +1,23 @@
 {
+    "BETT": {
+        "key": "BETT",
+        "name": "SC Bettembourg",
+        "img": "lux/sc-bettembourg.png"
+    },
     "BLVL": {
         "key": "BLVL",
         "name": "FC Bieles",
-        "img": "fc-bieles.png"
+        "img": "lux/fc-bieles.png"
     },
     "DIFF": {
         "key": "DIFF",
         "name": "Differdange",
-        "img": "fc-differdange-03.png"
+        "img": "lux/fc-differdange-03.png"
     },
     "KAER": {
         "key": "KAER",
         "name": "UN Käerjéng 97",
-        "img": "un-kaerjeng-97.png"
+        "img": "lux/un-kaerjeng-97.png"
     },
     "NULL": {
         "key": "NULL",
@@ -22,6 +27,6 @@
     "UNTP": {
         "key": "UNTP",
         "name": "Union Titus Pétange",
-        "img": "union-titus-petange.png"
+        "img": "lux/union-titus-petange.png"
     }
 }

@@ -1,5 +1,5 @@
 let contentArea = document.getElementById("content");
-let imgPrefix = "https://www.philipbkemp.net/alex/clubs/";
+let imgPrefix = "/assets/badges/";
 let params = {
     lang: "en",
     home: "",

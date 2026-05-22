@@ -299,4 +299,20 @@ function doneFetch() {
     });
     pauseBtns.append(pauseFullTime);
 
+    document.getElementById("modalGoal").addEventListener("hide.bs.modal",()=>{
+        if ( document.activeElement ) {
+            document.activeElement.blur();
+        }
+    });
+    document.getElementById("modalGoalHome").addEventListener("hide.bs.modal",()=>{
+        if ( document.activeElement ) {
+            document.activeElement.blur();
+        }
+    });
+    document.getElementById("modalGoalAway").addEventListener("hide.bs.modal",()=>{
+        if ( document.activeElement ) {
+            document.activeElement.blur();
+        }
+    });
+
 }

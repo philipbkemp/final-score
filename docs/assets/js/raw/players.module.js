@@ -6,8 +6,8 @@ let params = {
     lang: "en",
     home: "",
     away: "",
-    team_home: "",
-    team_away: ""
+    team_home: "?",
+    team_away: "?"
 };
 let players = {
     home: [],
@@ -132,7 +132,7 @@ function doneFetch() {
             let input = document.createElement("INPUT");
             input.classList.add("form-control");
             input.value = p;
-            players.home.push(p);
+            players.away.push(p);
             input.readOnly = true;
             group.append(input);
             awayWrap.append(group);

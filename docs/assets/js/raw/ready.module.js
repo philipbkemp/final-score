@@ -1,5 +1,5 @@
 let contentArea = document.getElementById("content");
-let imgPrefix = "/assets/badges/";
+let imgPrefix = "assets/badges/";
 let params = {
     lang: "en",
     home: "",

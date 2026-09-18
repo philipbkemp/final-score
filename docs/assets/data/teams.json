@@ -19,6 +19,11 @@
         "name": "UN Käerjéng 97",
         "img": "lux/un-kaerjeng-97.png"
     },
+    "MOND": {
+        "key": "MOND",
+        "name": "Monnerech",
+        "img": "lux/fc-monnerech.png"
+    },
     "NULL": {
         "key": "NULL",
         "name": "- Unknown team -",

@@ -24,14 +24,19 @@
         "name": "Monnerech",
         "img": "lux/fc-monnerech.png"
     },
-    "NULL": {
-        "key": "NULL",
-        "name": "- Unknown team -",
-        "img": "unknown.png"
+    "SCHF": {
+        "key": "SCHF",
+        "name": "Schëffleng 95",
+        "img": "lux/scheffleng-95.png"
     },
     "UNTP": {
         "key": "UNTP",
         "name": "Union Titus Pétange",
         "img": "lux/union-titus-petange.png"
+    },
+    "NULL": {
+        "key": "NULL",
+        "name": "- Unknown team -",
+        "img": "unknown.png"
     }
 }

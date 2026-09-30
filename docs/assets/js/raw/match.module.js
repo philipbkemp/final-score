@@ -6,7 +6,8 @@ let params = {
     away: "",
     team_home: "",
     team_away: "",
-    events: ""
+    events: "",
+    start: ""
 };
 let teams = {};
 let texts = {};
@@ -31,13 +32,21 @@ try {
     handleError(error);
 }
 
-function rebuildURL() {
+function rebuildURL(clearStartTime=false) {
     const url = new URL(window.location.href);
     Object.keys(params).forEach(p=>{
         if ( params[p] === "" ) {
             url.searchParams.delete(p);
         } else {
-            url.searchParams.set(p,decodeURIComponent(params[p]));
+            if ( clearStartTime ) {
+                if ( p === "start" ) {
+                    url.searchParams.delete(p);
+                } else {
+                    url.searchParams.set(p,decodeURIComponent(params[p]));
+                }
+            } else {
+                url.searchParams.set(p,decodeURIComponent(params[p]));
+            }
         }
     });
     window.history.pushState({},"",url);
@@ -55,13 +64,35 @@ function handleError(error) {
     console.error(error);
 }
 
+function updateTimekeeper() {
+    const now = new Date();
+    const startTime = params.start;
+    if ( startTime === "" ) {
+        return;
+    }
+    const [hours,minutes,seconds] = startTime.split(":").map(Number);
+
+    const then = new Date();
+    then.setHours(hours,minutes,seconds,0);
+
+    const elapsed = Math.floor((now - then.getTime()) /1000 );
+    const elapsedMin = Math.floor(elapsed / 60);
+    const elapsedSec = elapsed % 60;
+
+    const formatted = `${String(elapsedMin).padStart(2, "0")}:${String(elapsedSec).padStart(2, "0")}`;
+
+    document.getElementById("timekeeper").textContent = formatted;
+
+    setTimeout(updateTimekeeper, 1000);
+}
+
 function doneFetch() {
 
     let row = document.createElement("DIV");
     row.classList.add("row","mt-5");
 
     let home = document.createElement("DIV");
-    home.classList.add("col-6");
+    home.classList.add("col-5");
     let homeTeam = document.createElement("DIV");
     homeTeam.classList.add("match-team");
     let homeImg = document.createElement("IMG");
@@ -73,8 +104,16 @@ function doneFetch() {
     homeTeam.append(homeScoreDisplay);
     home.append(homeTeam);
 
+    let time = document.createElement("DIV");
+    time.classList.add("col-2","align-items-center","d-flex","justify-content-center");
+    let timekeeper = document.createElement("SPAN");
+    timekeeper.textContent = "00:00";
+    timekeeper.setAttribute("id","timekeeper");
+    timekeeper.classList.add("fs-4");
+    time.append(timekeeper);
+
     let away = document.createElement("DIV");
-    away.classList.add("col-6");
+    away.classList.add("col-5");
     let awayTeam = document.createElement("DIV");
     awayTeam.classList.add("match-team");
     let awayImg = document.createElement("IMG");
@@ -87,6 +126,7 @@ function doneFetch() {
     away.append(awayTeam);
 
     row.append(home);
+    row.append(time);
     row.append(away);
 
     let hr = document.createElement("HR");
@@ -121,6 +161,13 @@ function doneFetch() {
 
     contentArea.append(rowNotes);
 
+    params.events = params.events.replaceAll("%7E","~");
+
+    if ( params.events.split("")[0] === "_" ) {
+        params.events = "~" + params.events;
+    }
+    params.events = params.events.replaceAll("__","_~_");
+
     if ( params.events !== "" ) {
         params.events.split("").forEach(e=>{
             let hLine = "";
@@ -135,6 +182,16 @@ function doneFetch() {
                 scoreLines.append(newScoreLine);
                 let newAwayLine = document.createElement("LI");
                 newAwayLine.classList.add("score-divider");
+                awayLines.append(newAwayLine);
+            } else if ( e === "~" ) {
+                let newHomeLine = document.createElement("LI");
+                newHomeLine.innerHTML = "&nbsp;";
+                homeLines.append(newHomeLine);
+                let newScoreLine = document.createElement("LI");
+                newScoreLine.innerHTML = homeScore + "-" + awayScore;
+                scoreLines.append(newScoreLine);
+                let newAwayLine = document.createElement("LI");
+                newAwayLine.innerHTML = "&nbsp;";
                 awayLines.append(newAwayLine);
             } else {
                 const isDigit  = /\d/.test(e);
@@ -184,17 +241,27 @@ function doneFetch() {
     addGoal.innerHTML = texts.goal;
     addGoal.dataset.bsToggle = "modal";
     addGoal.dataset.bsTarget = "#modalGoal";
+    addGoal.setAttribute("id","goGoal");
     actionButtonOne.append(addGoal);
     let actionButtonTwo = document.createElement("DIV");
     actionButtonTwo.classList.add("col-6");
     let pauseGame = document.createElement("BUTTON");
     pauseGame.classList.add("btn","btn-outline-primary","mt-2","w-100");
+    pauseGame.setAttribute("id","goPause");
     pauseGame.innerHTML = texts.pause;
     pauseGame.dataset.bsToggle = "modal";
     pauseGame.dataset.bsTarget = "#modalPause";
     actionButtonTwo.append(pauseGame);
+    let actionButtonThree = document.createElement("DIV");
+    actionButtonThree.classList.add("col-12");
+    let startGame = document.createElement("BUTTON");
+    startGame.classList.add("btn","btn-outline-primary","mt-2","w-100");
+    startGame.setAttribute("id","goKickoff");
+    startGame.innerHTML = texts.kickoff;
+    actionButtonThree.append(startGame);
     actions.append(actionButtonOne);
     actions.append(actionButtonTwo);
+    actions.append(actionButtonThree);
     contentArea.append(actions);
 
     document.getElementById("goalForHome").innerHTML = texts.select_home;
@@ -261,7 +328,7 @@ function doneFetch() {
     pauseHalfTime.innerHTML = texts.halftime;
     pauseHalfTime.addEventListener("click",function(){
         params.events += "_";
-        rebuildURL();
+        rebuildURL(true);
         let newHomeLine = document.createElement("LI");
         newHomeLine.classList.add("score-divider");
         homeLines.append(newHomeLine);
@@ -273,6 +340,7 @@ function doneFetch() {
         awayLines.append(newAwayLine);
         const container = document.getElementById('score-wrap');
         container.scrollTop = container.scrollHeight;
+        window.location.reload();
     });
     pauseBtns.append(pauseHalfTime);
 
@@ -282,7 +350,7 @@ function doneFetch() {
     pauseFullTime.innerHTML = texts.fulltime;
     pauseFullTime.addEventListener("click",function(){
         params.events += "-";
-        rebuildURL();
+        rebuildURL(true);
         let newHomeLine = document.createElement("LI");
         newHomeLine.classList.add("score-divider");
         homeLines.append(newHomeLine);
@@ -296,6 +364,7 @@ function doneFetch() {
         container.scrollTop = container.scrollHeight;
         actions.classList.add("d-none");
         container.classList.add("score-ft");
+        window.location.reload();
     });
     pauseBtns.append(pauseFullTime);
 
@@ -314,5 +383,23 @@ function doneFetch() {
             document.activeElement.blur();
         }
     });
+
+    document.getElementById("goKickoff").addEventListener("click",()=>{
+        window.location.href = window.location.href+"&start="+new Date().toTimeString().split(" ")[0];
+    });
+
+    if ( params.start !== "" ) {
+        document.getElementById("goGoal").classList.remove("d-none");
+        document.getElementById("goPause").classList.remove("d-none");
+        document.getElementById("goKickoff").classList.add("d-none");
+        document.getElementById("timekeeper").classList.remove("d-none");
+    } else {
+        document.getElementById("goGoal").classList.add("d-none");
+        document.getElementById("goPause").classList.add("d-none");
+        document.getElementById("goKickoff").classList.remove("d-none");
+        document.getElementById("timekeeper").classList.add("d-none");
+    }
+
+    updateTimekeeper();
 
 }

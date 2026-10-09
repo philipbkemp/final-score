@@ -24,6 +24,11 @@
         "name": "Monnerech",
         "img": "lux/fc-monnerech.png"
     },
+    "RODG": {
+        "key": "RODG",
+        "name": "Rodange 91",
+        "img": "lux/rodange-91.png"
+    },
     "SCHF": {
         "key": "SCHF",
         "name": "Schëffleng 95",

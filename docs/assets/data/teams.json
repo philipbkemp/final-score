@@ -39,6 +39,11 @@
         "name": "Union Titus Pétange",
         "img": "lux/union-titus-petange.png"
     },
+    "URUM": {
+        "key": "URUM",
+        "name": "US Rumelange",
+        "img": "lux/rumelange.png"
+    },
     "NULL": {
         "key": "NULL",
         "name": "- Unknown team -",
